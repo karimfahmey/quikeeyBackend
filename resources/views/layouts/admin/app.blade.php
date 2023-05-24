@@ -17,6 +17,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Title -->
     <title>@yield('title')</title>
+
     <!-- Favicon -->
     @php($logo = \App\Models\BusinessSetting::where(['key' => 'icon'])->first()->value)
     <link rel="shortcut icon" href="">

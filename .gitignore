@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+
 # misc
 .DS_Store
 .env
