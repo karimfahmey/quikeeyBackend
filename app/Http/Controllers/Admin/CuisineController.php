@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\CentralLogics\Helpers;
 use App\Http\Controllers\Controller;
+use App\Models\Translation;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
 
@@ -47,9 +48,17 @@ class CuisineController extends Controller
         ]);
 
         $cuisine = new Cuisine();
-        $cuisine->name = $request->name;
+        $cuisine->name = $request->name[array_search('en', $request->lang)];
         $cuisine->image = $request->has('image') ? Helpers::upload('cuisine/', 'png', $request->file('image')) : 'def.png';
         $cuisine->save();
+
+        Translation::create([
+            'translationable_type' => 'App\Models\Cuisine',
+            'translationable_id' => $cuisine->id,
+            'locale' => 'ar',
+            'key' => 'name',
+            'value' => $request->ar_name,
+        ]);
 
         Toastr::success(translate('messages.Cuisine_added_successfully'));
         return back();
